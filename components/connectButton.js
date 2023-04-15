@@ -1,8 +1,10 @@
-import React, {useEffect,useState} from "react";
+import React, {useContext} from "react";
+
+import AccountContext from "@/contexts/accountContext";
 
 export default function ConnectButton() {
 
-    const [currentAccount,setCurrentAccount] = useState("")
+    const {account, setAccount} = useContext(AccountContext);
 
     const connectWallet = async () => {
         try{
@@ -14,38 +16,21 @@ export default function ConnectButton() {
             const accounts = await ethereum.request({
                 method: "eth_requestAccounts",
             });
-            setCurrentAccount(accounts[0]);
+            setAccount(accounts[0]);
         }catch(error){
             alert("Wallet 接続中にエラーが起こりました")
             console.log(error)
         }
     }
 
-    const init = async () => {
-        try{
-            const {ethereum} = window;
-            const accounts = await ethereum.request({method: "eth_accounts"});
-            if(accounts.length != 0){
-                const account = accounts[0];
-                setCurrentAccount(account);
-            }
-        }catch(error){
-            console.log(error)
-        }
-    }
-
-    useEffect(() => {
-        init();
-    },[]);
-
     return (
         <>
-            {!currentAccount && (
+            {!account && (
                 <button onClick = {connectWallet} className = "text-white bg-slate-950 rounded-lg px-5 py-2.5">
                     Connect Wallet
                 </button>
             )}
-            {currentAccount && (
+            {account && (
                 <button onClick = {connectWallet} className = "text-white bg-slate-950 rounded-lg px-5 py-2.5">
                     Connected !
                 </button>
