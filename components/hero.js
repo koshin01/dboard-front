@@ -5,7 +5,7 @@ import Board from '@/components/board.js'
 export default function Hero() {
     return(
         <div className = "flex flex-col mt-10 space-y-4">
-            <ConnectButton state = "Connect with Wallet"/>
+            <ConnectButton/>
             <InputField />
             <Board />
         </div>

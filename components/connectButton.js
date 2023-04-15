@@ -1,7 +1,55 @@
-export default function ConnectButton({ state }) {
+import React, {useEffect,useState} from "react";
+
+export default function ConnectButton() {
+
+    const [currentAccount,setCurrentAccount] = useState("")
+
+    const connectWallet = async () => {
+        try{
+            const {ethereum} = window;
+            if(!ethereum) {
+                alert("MetaMask などのウォレットが必要です。")
+                return
+            };
+            const accounts = await ethereum.request({
+                method: "eth_requestAccounts",
+            });
+            setCurrentAccount(accounts[0]);
+        }catch(error){
+            alert("Wallet 接続中にエラーが起こりました")
+            console.log(error)
+        }
+    }
+
+    const init = async () => {
+        try{
+            const {ethereum} = window;
+            const accounts = await ethereum.request({method: "eth_accounts"});
+            if(accounts.length != 0){
+                const account = accounts[0];
+                setCurrentAccount(account);
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        init();
+    },[]);
+
     return (
-        <button className = "text-white bg-slate-950 rounded-lg px-5 py-2.5">
-            {state}
-        </button>
+        <>
+            {!currentAccount && (
+                <button onClick = {connectWallet} className = "text-white bg-slate-950 rounded-lg px-5 py-2.5">
+                    Connect Wallet
+                </button>
+            )}
+            {currentAccount && (
+                <button onClick = {connectWallet} className = "text-white bg-slate-950 rounded-lg px-5 py-2.5">
+                    Connected !
+                </button>
+            )}            
+        </>
     )
 }
