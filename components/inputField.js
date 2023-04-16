@@ -15,12 +15,12 @@ export default function InputField() {
             if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum);
                 const signer = provider.getSigner();
-                const messaageContract = new ethers.Contract(
+                const messaagePortalContract = new ethers.Contract(
                     contractAddress,
                     abi.abi,
                     signer
                 );
-                const messageTxn = await messaageContract.message(context, { gasLimit: 300000 });
+                const messageTxn = await messaagePortalContract.message(context, { gasLimit: 300000 });
                 await messageTxn.wait();
             } else {
                 alert("メッセージを送信するには、ウォレットが必要です。")

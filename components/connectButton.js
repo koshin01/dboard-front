@@ -18,7 +18,7 @@ export default function ConnectButton() {
             });
             setAccount(accounts[0]);
         }catch(error){
-            alert("Wallet 接続中にエラーが起こりました")
+            alert("Wallet 接続中にエラーが起こりました。")
             console.log(error)
         }
     }
