@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 import { ethers } from "ethers";
+
+import ApprovalStateContext from "@/contexts/approvalStateContext";
 
 import abi from "@/utils/MessagePortal.json"
 
 export default function InputField() {
 
     const [context, setContext] = useState("");
+
+    const {approvalState, setApprovalState} = useContext(ApprovalStateContext)
 
     const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
@@ -20,12 +24,14 @@ export default function InputField() {
                     abi.abi,
                     signer
                 );
+                await setApprovalState(true);
                 const messageTxn = await messaagePortalContract.message(context, { gasLimit: 300000 });
                 await messageTxn.wait();
             } else {
                 alert("メッセージを送信するには、ウォレットが必要です。")
             }
         } catch (error) {
+            await setApprovalState(false);
             alert("メッセージ送信中にエラーが発生しました。");
             console.log(error);
         }
