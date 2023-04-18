@@ -1,10 +1,25 @@
-import React, {useContext} from "react";
-
-import AccountContext from "@/contexts/accountContext";
+import React, {useState, useEffect} from "react";
 
 export default function ConnectButton() {
 
-    const {account, setAccount} = useContext(AccountContext);
+    const [account, setAccount] = useState("");
+
+    const init = async () => {
+        try {
+            const { ethereum } = window;
+            const accounts = await ethereum.request({ method: "eth_accounts" });
+            if (accounts.length != 0) {
+                const account = accounts[0];
+                setAccount(account);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        init();
+    }, []);
 
     const connectWallet = async () => {
         try{
