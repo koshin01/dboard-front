@@ -10,7 +10,7 @@ export default function Board() {
 
     const [formattedMessages, setFormattedMessages] = useState([])
 
-    const [isBoolean, switchBoolean] = useState(false)
+    let [renderCount, setRenderCount] = useState(0)
 
     const { approvalState, setApprovalState } = useContext(ApprovalStateContext)
 
@@ -36,7 +36,6 @@ export default function Board() {
                 }
             });
             setFormattedMessages(formattedMessages);
-            switchBoolean(true);
         } catch {
             try {
                 const Alchemy_URL = process.env.NEXT_PUBLIC_YOUR_ALCHEMY_API_URL;
@@ -55,7 +54,6 @@ export default function Board() {
                     }
                 });
                 setFormattedMessages(formattedMessages);
-                switchBoolean(true);
             } catch (error) {
                 console.log(error);
             }
@@ -63,10 +61,13 @@ export default function Board() {
     }
 
     useEffect(() => {
-        getCurrentMessages();
-    },[])
 
-    useEffect(() => {
+        renderCount = renderCount + 1
+        setRenderCount(renderCount)
+
+        console.log(renderCount)
+
+        getCurrentMessages();
 
         let messaagePortalContract;
 
@@ -82,7 +83,7 @@ export default function Board() {
             setApprovalState(false);
         }
 
-        if (window.ethereum) {
+        if (renderCount == 1 && window.ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
             const messaagePortalContract = new ethers.Contract(
@@ -98,7 +99,7 @@ export default function Board() {
                 messaagePortalContract.off("NewMessage", onNewMessage);
             }
         }
-    }, [isBoolean]);
+    }, []);
 
     const unixTimeToFormattedData = (unixTime) => {
         const date = new Date(unixTime * 1000);
