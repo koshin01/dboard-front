@@ -59,7 +59,7 @@ export default function ConnectButton() {
     return (
         <>
             {!account && (
-                <button onClick={connectWallet} className="text-white bg-slate-950 rounded-lg px-5 py-2.5">
+                <button onClick={connectWallet} className="w-96 text-white bg-slate-950 rounded-lg px-5 py-2.5">
                     Connect Wallet
                 </button>
             )}
