@@ -17,19 +17,36 @@ export default function Board() {
     const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
     const getCurrentMessages = async () => {
-        const { ethereum } = window;
-
         try {
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
+            const { ethereum } = window;
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            const messaagePortalContract = new ethers.Contract(
+                contractAddress,
+                abi.abi,
+                signer
+            );
+            const messages = await messaagePortalContract.getCurrentMessages();
+
+            const formattedMessages = messages.map((message) => {
+                return {
+                    address: message.sender,
+                    timestamp: unixTimeToFormattedData(message.timestamp),
+                    context: message.context,
+                }
+            });
+            setFormattedMessages(formattedMessages);
+            switchBoolean(true);
+        } catch {
+            try {
+                const Alchemy_URL = process.env.NEXT_PUBLIC_YOUR_ALCHEMY_API_URL;
+                const provider = new ethers.providers.JsonRpcProvider(Alchemy_URL);
                 const messaagePortalContract = new ethers.Contract(
                     contractAddress,
                     abi.abi,
-                    signer
+                    provider
                 );
                 const messages = await messaagePortalContract.getCurrentMessages();
-
                 const formattedMessages = messages.map((message) => {
                     return {
                         address: message.sender,
@@ -39,13 +56,15 @@ export default function Board() {
                 });
                 setFormattedMessages(formattedMessages);
                 switchBoolean(true);
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     }
 
-    getCurrentMessages();
+    useEffect(() => {
+        getCurrentMessages();
+    },[])
 
     useEffect(() => {
 
