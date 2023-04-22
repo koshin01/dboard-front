@@ -41,8 +41,8 @@ export default function InputField() {
                     abi.abi,
                     signer
                 );
-                await setApprovalState(true);
                 const messageTxn = await messaagePortalContract.message(context, { gasLimit: 300000 });
+                await setApprovalState(true);
                 await messageTxn.wait();
             }
         } catch (error) {
