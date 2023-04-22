@@ -1,10 +1,26 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import AccountContext from "@/contexts/accountContext";
+import IsOpenContext from "@/contexts/isOpenContext";
+
+import CustomDialog from "@/components/customDialog";
 
 export default function ConnectButton() {
 
-    const {account, setAccount} = useContext(AccountContext);
+    const { account, setAccount } = useContext(AccountContext);
+
+    const { isOpen, setIsOpen } = useContext(IsOpenContext);
+
+    const [dialogContext, setDialogContext] = useState("");
+
+    const pleaseGetWallet = { title: "ウォレットが見つからない🥺", paragraph: "MetaMask などのウォレットをインストールしてください！" }
+
+    const errorDuringWalletConnection = { title: "ウォレット接続中にエラーが起こりました😢", paragraph: "もう一度、Connect Wallet ボタンを押してください！" }
+
+    const setDialog = (context) => {
+        setDialogContext(context);
+        setIsOpen(true);
+    }
 
     const init = async () => {
         try {
@@ -24,18 +40,18 @@ export default function ConnectButton() {
     }, []);
 
     const connectWallet = async () => {
-        try{
-            const {ethereum} = window;
-            if(!ethereum) {
-                alert("MetaMask などのWallet が必要です。")
+        try {
+            const { ethereum } = window;
+            if (!ethereum) {
+                setDialog(pleaseGetWallet);
                 return
             };
             const accounts = await ethereum.request({
                 method: "eth_requestAccounts",
             });
             setAccount(accounts[0]);
-        }catch(error){
-            alert("Wallet 接続中にエラーが起こりました。")
+        } catch (error) {
+            setDialog(errorDuringWalletConnection);
             console.log(error)
         }
     }
@@ -43,15 +59,18 @@ export default function ConnectButton() {
     return (
         <>
             {!account && (
-                <button onClick = {connectWallet} className = "text-white bg-slate-950 rounded-lg px-5 py-2.5">
+                <button onClick={connectWallet} className="text-white bg-slate-950 rounded-lg px-5 py-2.5">
                     Connect Wallet
                 </button>
             )}
             {account && (
-                <button onClick = {connectWallet} className = "text-white bg-slate-950 rounded-lg px-5 py-2.5">
+                <button onClick={connectWallet} className="text-white bg-slate-950 rounded-lg px-5 py-2.5">
                     Connected !
                 </button>
-            )}            
+            )}
+            {!dialogContext == "" && (
+                <CustomDialog {...dialogContext} />
+            )}
         </>
     )
 }
