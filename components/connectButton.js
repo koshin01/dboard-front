@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+
+import AccountContext from "@/contexts/accountContext";
 
 export default function ConnectButton() {
 
-    const [account, setAccount] = useState("");
+    const {account, setAccount} = useContext(AccountContext);
 
     const init = async () => {
         try {
@@ -25,7 +27,7 @@ export default function ConnectButton() {
         try{
             const {ethereum} = window;
             if(!ethereum) {
-                alert("MetaMask などのウォレットが必要です。")
+                alert("MetaMask などのWallet が必要です。")
                 return
             };
             const accounts = await ethereum.request({
