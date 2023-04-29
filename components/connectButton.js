@@ -13,9 +13,9 @@ export default function ConnectButton() {
 
     const [dialogContext, setDialogContext] = useState("");
 
-    const pleaseGetWallet = { title: "ウォレットが見つからない🥺", paragraph: "MetaMask などのウォレットをインストールしてください！" }
+    const pleaseGetWallet = { title: "Wallet が見つからない🥺", paragraph: "MetaMask などのWallet をインストールしてください！" }
 
-    const errorDuringWalletConnection = { title: "ウォレット接続中にエラーが起こりました😢", paragraph: "もう一度、Connect Wallet ボタンを押してください！" }
+    const errorDuringWalletConnection = { title: "Wallet 接続中にエラーが起こりました😢", paragraph: "もう一度、Connect Wallet ボタンを押してください！" }
 
     const setDialog = (context) => {
         setDialogContext(context);
@@ -59,12 +59,12 @@ export default function ConnectButton() {
     return (
         <>
             {!account && (
-                <button onClick={connectWallet} className="w-96 text-white bg-slate-950 rounded-lg px-5 py-2.5">
+                <button onClick={connectWallet} className="w-96 text-white bg-slate-950 hover:bg-slate-900 rounded-lg py-2.5">
                     Connect Wallet
                 </button>
             )}
             {account && (
-                <button onClick={connectWallet} className="text-white bg-slate-950 rounded-lg px-5 py-2.5">
+                <button onClick={connectWallet} className="text-white bg-slate-950 rounded-lg py-2.5">
                     Connected !
                 </button>
             )}

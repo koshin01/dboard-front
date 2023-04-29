@@ -1,7 +1,9 @@
 export default function Header() {
-    return(
-        <header className = "flex justify-center text-5xl font-semibold mt-20 font-futura">
-            <span>DBoard</span>
-        </header>
+    return (
+        <>
+            <header className="flex justify-center mt-20 ">
+                <span className="text-5xl font-semibold font-futura">DBoard</span>
+            </header>
+        </>
     )
 }

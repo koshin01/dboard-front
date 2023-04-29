@@ -65,8 +65,6 @@ export default function Board() {
         renderCount = renderCount + 1
         setRenderCount(renderCount)
 
-        console.log(renderCount)
-
         getCurrentMessages();
 
         let messaagePortalContract;

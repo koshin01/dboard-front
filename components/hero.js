@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useState} from 'react'
 
 import ApprovalStateContext from '@/contexts/approvalStateContext'
 import AccountContext from '@/contexts/accountContext'
 
-import ConnectButton from '@/components/connectButton.js'
-import InputField from '@/components/inputField.js'
-import Board from '@/components/board.js'
+import ConnectButton from '@/components/connectButton'
+import InputField from '@/components/inputField'
+import Board from '@/components/board'
+import Welcome from '@/components/welcome'
+
 
 export default function Hero() {
 
@@ -22,6 +24,7 @@ export default function Hero() {
                     <Board />
                 </ApprovalStateContext.Provider>
             </AccountContext.Provider>
+            <Welcome />
         </div>
     )
 }
