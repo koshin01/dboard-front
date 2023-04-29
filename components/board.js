@@ -130,8 +130,8 @@ export default function Board() {
             {formattedMessages.slice(0).reverse().map((message, index) => {
                 return (
                     <div key={index}>
-                        <div className = "text-xs md:text-sm">{message.address}</div>
-                        <div className="text-gray-500 text-xs md:text-sm">{message.timestamp.toString()}</div>
+                        <div className = "text-xs md:text-sm lg:text-base">{message.address}</div>
+                        <div className="text-gray-500 text-xs md:text-sm lg:text-base">{message.timestamp.toString()}</div>
                         <div className="font-medium mt-1 text-sm md:text-lg">{message.context}</div>
                     </div>
                 );
