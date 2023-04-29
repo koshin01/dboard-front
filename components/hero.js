@@ -16,7 +16,7 @@ export default function Hero() {
     const [approvalState, setApprovalState] = useState(false);
 
     return (
-        <div className="flex flex-col mt-10 space-y-4 w-96">
+        <div className="flex flex-col mt-10 space-y-4 w-80 md:w-96">
             <AccountContext.Provider value={{ account, setAccount }}>
                 <ConnectButton />
                 <ApprovalStateContext.Provider value={{ approvalState, setApprovalState }}>
