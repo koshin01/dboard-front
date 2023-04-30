@@ -2,7 +2,7 @@
 
 ## **About**
 オープンソースプロジェクト「DBoard」のフロントのリポジトリです。<br>
-コントラクトのリポジトリと合わせて、DBoard は動いています！
+[コントラクトのリポジトリ](https://github.com/koshin01/dboard-contract)と合わせて、DBoard は動いています！
 
 ## **Tech Stack**
 フロントエンドの技術スタックは👇の通りです。
