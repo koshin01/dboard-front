@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 import IsOpenContext from '@/contexts/isOpenContext'
 
-import eyecatch from '@/images/thumbnail.jpeg'
+import eyecatch from '@/images/opg.jpeg'
 
 export default function Home() {
 

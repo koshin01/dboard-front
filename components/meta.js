@@ -11,6 +11,8 @@ export default function Meta({pageImg, pageImgW, pageImgH}) {
 
     const imgUrl = pageImg.startsWith("https") ? pageImg: `${siteUrl}${pageImg}`
 
+    const twitterUserName = process.env.NEXT_PUBLIC_YOUR_TWITTER_USER_NAME;
+
     return (
         <Head>
             <title>{siteTitle}</title>
@@ -31,6 +33,7 @@ export default function Meta({pageImg, pageImgW, pageImgH}) {
             <meta property="og:image:width" content = {pageImgW} />
             <meta property="og:image:height" content = {pageImgH} />
             <meta name = "twitter:card" content = "summary_large_image" />
+            <meta name = "twitter:site" content = {twitterUserName} />
         </Head>
     )
 }
