@@ -69,8 +69,8 @@ export default function Board() {
 
         let messaagePortalContract;
 
-        const onNewMessage = (sender, timestamp, context) => {
-            setFormattedMessages((prevState) => [
+        const onNewMessage = async (sender, timestamp, context) => {
+            await setFormattedMessages((prevState) => [
                 ...prevState,
                 {
                     address: sender,
@@ -78,7 +78,7 @@ export default function Board() {
                     context: context,
                 }
             ])
-            setApprovalState(false);
+            await setApprovalState(false);
         }
 
         if (renderCount == 1 && window.ethereum) {
