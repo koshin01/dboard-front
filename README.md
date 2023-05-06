@@ -13,6 +13,7 @@
 **ライブラリ**<br>
 - React<br>
 - ethers.js<br>
+- thirdweb WalletSDK<br>
 
 **フレームワーク**<br>
 - NEXT JS<br>

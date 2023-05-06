@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
+import { MetaMaskWallet } from "@thirdweb-dev/wallets";
+
 import AccountContext from "@/contexts/accountContext";
 import IsOpenContext from "@/contexts/isOpenContext";
 
@@ -17,6 +19,8 @@ export default function ConnectButton() {
 
     const errorDuringWalletConnection = { title: "Wallet 接続中にエラーが起こりました😢", paragraph: "もう一度、Connect Wallet ボタンを押してください！" }
 
+    const pleaseChangeChain = { title: "チェーンを切り替えて🙏", paragraph: "メッセージを送信するには、ネットワークをSeplia に切り替える必要があります！" }
+
     const setDialog = (context) => {
         setDialogContext(context);
         setIsOpen(true);
@@ -24,12 +28,20 @@ export default function ConnectButton() {
 
     const init = async () => {
         try {
-            const { ethereum } = window;
-            const accounts = await ethereum.request({ method: "eth_accounts" });
-            if (accounts.length != 0) {
-                const account = accounts[0];
-                setAccount(account);
+            const wallet = new MetaMaskWallet();
+
+            const address = await wallet.autoConnect();
+
+            const chainId = await wallet.getChainId();
+
+            if (!(chainId == 11155111)) {
+                setDialog(pleaseChangeChain);
+                await wallet.switchChain(11155111);
+                setIsOpen(false);
             }
+
+            setAccount(address);
+
         } catch (error) {
             console.log(error)
         }
@@ -46,10 +58,18 @@ export default function ConnectButton() {
                 setDialog(pleaseGetWallet);
                 return
             };
-            const accounts = await ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            setAccount(accounts[0]);
+            const wallet = new MetaMaskWallet();
+
+            const address = await wallet.connect();
+
+            const chainId = await wallet.getChainId();
+            if (!(chainId == 11155111)) {
+                setDialog(pleaseChangeChain);
+                await wallet.switchChain(11155111);
+                setIsOpen(false);
+            }
+
+            setAccount(address);
         } catch (error) {
             setDialog(errorDuringWalletConnection);
             console.log(error)
