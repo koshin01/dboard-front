@@ -38,7 +38,7 @@ export default function Board() {
             setFormattedMessages(formattedMessages);
         } catch {
             try {
-                const Alchemy_URL = process.env.NEXT_PUBLIC_YOUR_ALCHEMY_API_URL;
+                const Alchemy_URL = process.env.YOUR_ALCHEMY_API_URL;
                 const provider = new ethers.providers.JsonRpcProvider(Alchemy_URL);
                 const messaagePortalContract = new ethers.Contract(
                     contractAddress,
