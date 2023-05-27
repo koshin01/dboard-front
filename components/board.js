@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 
 import abi from "@/utils/MessagePortal.json"
 
-export default function Board() {
+export default function Board({alchmeyURL}) {
 
     const [formattedMessages, setFormattedMessages] = useState([])
 
@@ -38,7 +38,7 @@ export default function Board() {
             setFormattedMessages(formattedMessages);
         } catch {
             try {
-                const Alchemy_URL = process.env.YOUR_ALCHEMY_API_URL;
+                const Alchemy_URL = alchmeyURL;
                 const provider = new ethers.providers.JsonRpcProvider(Alchemy_URL);
                 const messaagePortalContract = new ethers.Contract(
                     contractAddress,

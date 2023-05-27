@@ -9,7 +9,7 @@ import Board from '@/components/board'
 import Welcome from '@/components/welcome'
 
 
-export default function Hero() {
+export default function Hero({ alchmeyURL }) {
 
     const [account, setAccount] = useState("")
 
@@ -21,7 +21,7 @@ export default function Hero() {
                 <ConnectButton />
                 <ApprovalStateContext.Provider value={{ approvalState, setApprovalState }}>
                     <InputField />
-                    <Board />
+                    <Board alchmeyURL = { alchmeyURL }/>
                 </ApprovalStateContext.Provider>
             </AccountContext.Provider>
             <Welcome />
